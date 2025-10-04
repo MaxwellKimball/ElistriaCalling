@@ -33,4 +33,7 @@ protected:
 
 	UPROPERTY(Replicated)
 	TObjectPtr<class UManaAttributeSet> ManaSet;
+
+private:
+	
 };

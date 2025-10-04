@@ -8,7 +8,7 @@ public class Elistria_Calling : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","GameplayAbilities", "GameplayTags", "GameplayTasks" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","GameplayAbilities", "GameplayTags", "GameplayTasks", "EnhancedInput","TargetingSystem" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

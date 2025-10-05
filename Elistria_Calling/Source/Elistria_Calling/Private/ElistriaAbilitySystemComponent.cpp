@@ -3,59 +3,54 @@
 
 #include "ElistriaAbilitySystemComponent.h"
 
+#include "NativeGameplayTags.h"
 #include "PlayerGameplayAbilitiesDataAsset.h"
 
-void UElistriaAbilitySystemComponent::ServerActivateAbilityByInputID_Implementation(FGameplayAbilitySpecHandle Handle,int32 InputID)
-{
-	TryActivateAbility(Handle);
-}
-
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Input_Confirm, "Input.Confirm");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Input_Cancel, "Input.Cancel");
 void UElistriaAbilitySystemComponent::GrantAbilitiesFromDataAsset(const UPlayerGameplayAbilitiesDataAsset* AbilitiesDataAsset)
 {
-	if (!AbilitiesDataAsset) return;
+	 if (!AbilitiesDataAsset) return;
+	for (const FGameplayInputAbilityInfo& AbilityInfo : AbilitiesDataAsset->GetMappings())
+	 {
+		 if (!AbilityInfo.IsValid()||!AbilityInfo.bAutoGive) continue;
 
-	for (const FGameplayInputAbilityInfo& AbilityInfo : AbilitiesDataAsset->GetInputAbilities())
-	{
-		if (AbilityInfo.IsValid())
+		FGameplayAbilitySpec Spec(AbilityInfo.AbilityClass,1,INDEX_NONE);
+
+		FGameplayAbilitySpecHandle Handle = GiveAbility(Spec);
+
+		if (FGameplayAbilitySpec* Found = FindAbilitySpecFromHandle(Handle))
 		{
-			FGameplayAbilitySpec AbilitySpec(AbilityInfo.AbilityClass, 1, AbilityInfo.InputID);
-			FGameplayAbilitySpecHandle SpecHandle = GiveAbility(AbilitySpec);
-			InputIDToAbilitySpecHandleMap.Add(AbilityInfo.InputID, SpecHandle);
+			if (AbilityInfo.InputTag.IsValid()&&!Found->DynamicAbilityTags.HasTagExact(AbilityInfo.InputTag))
+			{
+		 			Found->DynamicAbilityTags.AddTagFast(AbilityInfo.InputTag);
+		 			MarkAbilitySpecDirty(*Found);
+			}
+			TagToSpecHandleMap.Add(AbilityInfo.InputTag, Handle);
 		}
-	}
-}
-
-void UElistriaAbilitySystemComponent::AbilityLocalInputPressed(int32 InputID)
-{
-	if (FGameplayAbilitySpecHandle* HandlePtr = SlotToAbilityHandleMap.Find(InputID))
-	{
-		if (GetOwnerRole() < ROLE_Authority)
-		{
-			ServerActivateAbilityByInputID(*HandlePtr, InputID);
-		}
-		TryActivateAbility(*HandlePtr);
-	}
-}
-
-void UElistriaAbilitySystemComponent::EquipAbility(TSubclassOf<UGameplayAbility> NewAbility, int32 SlotIndex)
-{
-	if (!NewAbility) return;
-	UnequipAbility(SlotIndex);
-
-	FGameplayAbilitySpec Spec(NewAbility,1,SlotIndex);
-	FGameplayAbilitySpecHandle SpecHandle = GiveAbility(Spec);
-	SlotToAbilityHandleMap.Add(SlotIndex, SpecHandle);
-
+	 }
 	OnAbilitiesChanged.Broadcast(this);
 }
 
-void UElistriaAbilitySystemComponent::UnequipAbility(int32 SlotIndex)
+void UElistriaAbilitySystemComponent::HandleInputTag(ETriggerEvent EventType, FGameplayTag InputTag)
 {
-	if (FGameplayAbilitySpecHandle* HandlePtr = SlotToAbilityHandleMap.Find(SlotIndex))
+	if (!InputTag.IsValid()) return;
+
+	if (InputTag == TAG_Input_Confirm)
 	{
-		ClearAbility(*HandlePtr);
-		SlotToAbilityHandleMap.Remove(SlotIndex);
-		
-		OnAbilitiesChanged.Broadcast(this);
+		TargetConfirm();
+		return;
+	}
+	if (InputTag == TAG_Input_Cancel)
+	{
+		TargetCancel();
+		return;
+	}
+
+	if (EventType == ETriggerEvent::Started||EventType == ETriggerEvent::Triggered)
+	{
+		FGameplayTagContainer Tags(InputTag);
+		TryActivateAbilitiesByTag(Tags, true);
 	}
 }
+

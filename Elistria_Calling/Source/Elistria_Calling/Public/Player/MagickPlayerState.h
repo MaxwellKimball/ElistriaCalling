@@ -6,16 +6,18 @@
 #include "GameFramework/PlayerState.h"
 #include "AbilitySystemInterface.h"
 #include "ElistriaAbilitySystemComponent.h"
-#include "ManaAttributeSet.h"
-#include "MagickPlayerController.h"
+#include "Attributes/ManaAttributeSet.h"
+#include "Attributes/StaminaAttributeSet.h"
+#include "Attributes/HealthAttributeSet.h"
+
+class AMagickPlayerController;
+
 #include "MagickPlayerState.generated.h"
 
 UCLASS(Config=game)
 class ELISTRIA_CALLING_API AMagickPlayerState : public APlayerState, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
-
-	
 
 	virtual void BeginPlay() override;
 
@@ -33,6 +35,12 @@ protected:
 
 	UPROPERTY(Replicated)
 	TObjectPtr<class UManaAttributeSet> ManaSet;
+
+	UPROPERTY(Replicated)
+	TObjectPtr<UStaminaAttributeSet> StaminaSet;
+
+	UPROPERTY(Replicated)
+	TObjectPtr<UHealthAttributeSet> HealthSet;
 
 private:
 	

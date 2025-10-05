@@ -7,35 +7,50 @@
 #include "GameFramework/PlayerController.h"
 #include "InputMappingContext.h"
 #include "EnhancedInputSubsystems.h"
-#include "ElistriaEnhancedInputComponent.h"
+
+class UPlayerGameplayAbilitiesDataAsset;
+class UInputMappingContext;
+class UElistriaEnhancedInputComponent;
+class UElistriaAbilitySystemComponent;
+class AMagickPlayerState;
+struct FInputActionInstance;
+
 #include "MagickPlayerController.generated.h"
 
 /**
  * 
  */
+
+
+
 UCLASS()
 class ELISTRIA_CALLING_API AMagickPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
-	virtual void OnPossess(APawn* InPawn) override;
 
+public:
+	virtual void SetupInputComponent() override;
+	virtual void OnPossess(APawn* InPawn) override;
+	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintCallable, Category="Input")
+	void RebindAbilityInputs();
+
+	UFUNCTION()
+	void OnASCGranted(UElistriaAbilitySystemComponent* ASC);
+
+	UFUNCTION()
+	void HandleInput(const FInputActionInstance& Instance, FGameplayTag InputTag);
+	
 	UFUNCTION()
 	void OnAbilitiesChanged(UElistriaAbilitySystemComponent* ASC);
 
-public:
+	UFUNCTION()
+	void AbilityInputTag(const FInputActionInstance& Instance, FGameplayTag InputTag);
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
 	TObjectPtr<UPlayerGameplayAbilitiesDataAsset> InputAbilitiesDataAsset;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
 	TObjectPtr<UInputMappingContext> InputMappingContext;
-
-	virtual void SetupInputComponent() override;
-
-	UFUNCTION()
-	void AbilityInputPressed(int32 InputID);
-
-	virtual void BeginPlay() override;
-
-	void RebindAbilityInputs();
 };

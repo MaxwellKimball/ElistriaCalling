@@ -7,7 +7,7 @@
 
 void UElistriaEnhancedInputComponent::ClearAbilityBindings()
 {
-	for (uint32 Handle : AbilityActionBindings)
+	for (int32 Handle : AbilityActionBindings)
 	{
 		RemoveBindingByHandle(Handle);
 	}

@@ -11,35 +11,36 @@
 /**
  * 
  */
+class UPlayerGameplayAbilitiesDataAsset;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnASCGrantedInputAbilties, UElistriaAbilitySystemComponent*, ASC);
+
 UCLASS()
 class ELISTRIA_CALLING_API UElistriaAbilitySystemComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(Server, Reliable)
-	void ServerActivateAbilityByInputID(FGameplayAbilitySpecHandle Handle, int32 InputID);
+	UPROPERTY(BlueprintAssignable, Category="AbilitySystem")
+	FOnASCGrantedInputAbilties OnGrantedInputAbilties;
 
-	UFUNCTION(BlueprintCallable)
-	void EquipAbility(TSubclassOf<UGameplayAbility> NewAbility, int32 SlotIndex);
+	UFUNCTION(BlueprintCallable, Category="AbilitySystem")
+	void GrantAbilitiesFromDataAsset(const UPlayerGameplayAbilitiesDataAsset* AbilitiesDataAsset);
 
-	UFUNCTION(BlueprintCallable)
-	void UnequipAbility(int32 SlotIndex);
+	UFUNCTION(BlueprintCallable, Category="AbilitySystem")
+	void HandleInputTag(ETriggerEvent EventType, FGameplayTag InputTag);
 
-	void RefreshInputBindings();
+	UFUNCTION(BlueprintCallable, Category="AbilitySystem")
+	void ConfirmTargetingInput(){TargetConfirm();}
+
+	UFUNCTION(BlueprintCallable, Category="AbilitySystem")
+	void CancelTargetingInput(){TargetCancel();}
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAbilitiesChanged, UElistriaAbilitySystemComponent*, ASC);
 	UPROPERTY(BlueprintAssignable)
 	FOnAbilitiesChanged OnAbilitiesChanged;
 
-	void GrantAbilitiesFromDataAsset(const UPlayerGameplayAbilitiesDataAsset* AbilitiesDataAsset);
-	virtual void AbilityLocalInputPressed(int32 InputID) override;
-
 private:
-	TMap<int32, FGameplayAbilitySpecHandle> InputIDToAbilitySpecHandleMap;
-
 	UPROPERTY()
-	TMap<int32, FGameplayAbilitySpecHandle> SlotToAbilityHandleMap;
-
-	void ServerActivateAbilityByInputID_Implementation(FGameplayAbilitySpecHandle Handle, int32 InputID);
+	TMap<FGameplayTag, FGameplayAbilitySpecHandle> TagToSpecHandleMap;
 };

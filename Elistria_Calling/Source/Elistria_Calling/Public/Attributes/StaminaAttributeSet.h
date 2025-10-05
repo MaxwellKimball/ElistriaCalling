@@ -4,13 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
-#include "HealthAttributeSet.generated.h"
+#include "ElistriaAttributeSetBase.h"
+#include "StaminaAttributeSet.generated.h"
 
 /**
  * 
  */
+
 UCLASS()
-class ELISTRIA_CALLING_API UHealthAttributeSet : public UAttributeSet
+class ELISTRIA_CALLING_API UStaminaAttributeSet : public UElistriaAttributeSetBase
 {
 	GENERATED_BODY()
 	

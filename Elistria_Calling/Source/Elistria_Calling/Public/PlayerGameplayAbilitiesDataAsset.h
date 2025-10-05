@@ -12,43 +12,32 @@
  */
 class UInputAction;
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FGameplayInputAbilityInfo
 {
 	GENERATED_USTRUCT_BODY()
 
-	UPROPERTY(EditAnywhere, Category = "GameplayInputAbilityInfo")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
 	TSubclassOf<UGameplayAbility> AbilityClass;
 
-	UPROPERTY(EditAnywhere, Category = "GameplayInputAbilityInfo")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Ability")
 	TObjectPtr<UInputAction> InputAction;
 
-	UPROPERTY(VisibleAnywhere, Category = "GameplayInputAbilityInfo")
-	int32 InputID;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Ability", meta = (Categories="Input"))
+	FGameplayTag InputTag;
 
-	bool IsValid() const
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Ability")
+	bool bAutoGive = true;
+
+	bool IsValid() const{ return AbilityClass && InputAction && InputTag.IsValid();}
+	
+	bool operator==(const FGameplayInputAbilityInfo& Other) const
 	{
-		return AbilityClass && InputAction;
+		return AbilityClass == Other.AbilityClass && InputAction == Other.InputAction && InputTag == Other.InputTag;
 	}
-
-	bool operator==(const FGameplayInputAbilityInfo& other) const
-	{
-		return AbilityClass == other.AbilityClass && InputID == other.InputID;
-	}
-
-	bool operator!=(const FGameplayInputAbilityInfo& other) const
-	{
-		return !operator==(other);
-	}
-
 	friend uint32 GetTypeHash(const FGameplayInputAbilityInfo& Item)
 	{
-		return HashCombine(GetTypeHash(Item.AbilityClass), Item.InputID);
-	}
-
-	FGameplayInputAbilityInfo()
-	: InputID(INDEX_NONE)
-	{
+		return HashCombine(GetTypeHash(Item.AbilityClass), GetTypeHash(Item.InputTag));
 	}
 };
 
@@ -57,16 +46,44 @@ class ELISTRIA_CALLING_API UPlayerGameplayAbilitiesDataAsset : public UDataAsset
 {
 	GENERATED_BODY()
 
-protected:
-	UPROPERTY(EditAnywhere, Category = "AbilitySystem")
-	TSet<FGameplayInputAbilityInfo> InputAbilities;
-
 public:
-	UPlayerGameplayAbilitiesDataAsset(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-	
-	const TSet<FGameplayInputAbilityInfo>& GetInputAbilities() const;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="AbilitySystem")
+	TArray<FGameplayInputAbilityInfo> AbilityMappings;
 
+	UFUNCTION(BlueprintPure, Category = "AbilitySystem")
+	void GetAllMappings(TArray<FGameplayInputAbilityInfo>& Out) const { Out = AbilityMappings; }
+
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	void AddMapping(const FGameplayInputAbilityInfo& Entry)
+	{
+		if (!Entry.IsValid()) return;
+		
+		AbilityMappings.Add(Entry);
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	void RemoveByTag(FGameplayTag InputTag)
+	{
+		AbilityMappings.RemoveAll([&](const FGameplayInputAbilityInfo& E) { return E.InputTag == InputTag; });
+	}
+
+	UFUNCTION(BlueprintPure, Category = "AbilitySystem")
+	void FindByTag(FGameplayTag InputTag, TArray<FGameplayInputAbilityInfo>& Out) const
+	{
+		for (const auto& E : AbilityMappings)
+		{
+			if (E.InputTag == InputTag)
+			{
+				Out.Add(E);
+			}
+		}
+	}
+	const TArray<FGameplayInputAbilityInfo>& GetMappings() const { return AbilityMappings; }
 #if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override
+	{
+		Super::PostEditChangeProperty(PropertyChangedEvent);
+		// Ensure uniqueness (Set already helps). Could add validation if needed.
+	}
 #endif
 };

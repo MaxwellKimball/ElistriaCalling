@@ -14,26 +14,42 @@ UCLASS()
 class ELISTRIA_CALLING_API UElistriaEnhancedInputComponent : public UEnhancedInputComponent
 {
 	GENERATED_BODY()
-public:
-	template<class UserClass, typename FuncType>
-	void BindAbilityActions(const UPlayerGameplayAbilitiesDataAsset* InputConfig, UserClass* Object, FuncType Func);
 
+public:
+	template <class UserClass>
+	void BindAbilityActionsByTag(const UPlayerGameplayAbilitiesDataAsset* InputConfig, UserClass* Object,
+	                             void (UserClass::*Func)(const FInputActionInstance&, FGameplayTag));
+	UFUNCTION(BlueprintCallable, Category="Input")
 	void ClearAbilityBindings();
-	
+
 private:
 
-	TArray<uint32> AbilityActionBindings;
+	TArray<int32> AbilityActionBindings;
 };
-template<class UserClass, typename FuncType>
-void UElistriaEnhancedInputComponent::BindAbilityActions(const UPlayerGameplayAbilitiesDataAsset* InputConfig, UserClass* Object, FuncType Func)
+template <class UserClass>
+void UElistriaEnhancedInputComponent::BindAbilityActionsByTag(const UPlayerGameplayAbilitiesDataAsset* InputConfig, UserClass* Object, void (UserClass::*Func)(const FInputActionInstance&, FGameplayTag))
 {
-	if (!InputConfig) return;
+	if (!InputConfig||!Func) return;
 
-	for (const FGameplayInputAbilityInfo& AbilityInfo : InputConfig->GetInputAbilities())
+	static const ETriggerEvent EventsToBind[]={
+		ETriggerEvent::Started,
+		ETriggerEvent::Completed,
+		ETriggerEvent::Canceled,
+		ETriggerEvent::Triggered,
+		ETriggerEvent::Ongoing
+	};
+	for (const FGameplayInputAbilityInfo& Info : InputConfig->AbilityMappings)
 	{
-		if (AbilityInfo.IsValid())
+		if (!Info.IsValid()) continue;
+
+		for (ETriggerEvent Event : EventsToBind)
 		{
-			BindAction(AbilityInfo.InputAction,ETriggerEvent::Triggered,Object,Func,AbilityInfo.InputID);
+			FEnhancedInputActionEventBinding& Binding = BindAction(Info.InputAction,Event,Object,Func,Info.InputTag);
+			AbilityActionBindings.Add(Binding.GetHandle());
 		}
 	}
+	{
+		
+	}
 }
+

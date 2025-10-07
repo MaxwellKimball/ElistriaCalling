@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "ManaAttributeSet.h"
+#include "Attributes/ManaAttributeSet.h"
 
 UManaAttributeSet::UManaAttributeSet()
 {
@@ -51,7 +51,7 @@ void UManaAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		}
 		SetCost(0.0f);
 	}
-	if (Data.EvaluatedData.Attribute==GetMaxManaAttribute())
+	if (Data.EvaluatedData.Attribute==GetRestoreAttribute())
 	{
 		const float RestoreValue = GetMaxMana();
 		const float OldMana = GetMana();

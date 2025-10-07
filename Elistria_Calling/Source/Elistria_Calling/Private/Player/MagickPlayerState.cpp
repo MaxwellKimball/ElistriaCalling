@@ -1,15 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
-#include "MagickPlayerState.h"
-
-
-
+#include "Player/MagickPlayerState.h"
+#include "Player/MagickPlayerController.h"
+#include "Net/UnrealNetwork.h"
 
 AMagickPlayerState::AMagickPlayerState()
 {
 	ElistriaAbilitySystemComponent = CreateDefaultSubobject<UElistriaAbilitySystemComponent>(TEXT("AbilitySystem"));
 	ManaSet = CreateDefaultSubobject<UManaAttributeSet>(TEXT("ManaSet"));
+	HealthSet = CreateDefaultSubobject<UHealthAttributeSet>(TEXT("HealthSet"));
+	StaminaSet = CreateDefaultSubobject<UStaminaAttributeSet>(TEXT("StaminaSet"));
+	LevelSet = CreateDefaultSubobject<ULevelAttributeSet>(TEXT("XPSet"));
 }
 
 UElistriaAbilitySystemComponent* AMagickPlayerState::GetAbilitySystemComponent() const
@@ -30,6 +31,8 @@ void AMagickPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 
 	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, ElistriaAbilitySystemComponent, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, ManaSet, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, HealthSet, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, StaminaSet, COND_None, REPNOTIFY_Always);
 }
 
 void AMagickPlayerState::SetupAbilityActorInfo()
@@ -53,6 +56,18 @@ void AMagickPlayerState::SetupAbilityActorInfo()
 		if (ManaSet)
 		{
 			ElistriaAbilitySystemComponent->AddAttributeSetSubobject(ManaSet.Get());
+		}
+		if (HealthSet)
+		{
+			ElistriaAbilitySystemComponent->AddAttributeSetSubobject(HealthSet.Get());
+		}
+		if (StaminaSet)
+		{
+			ElistriaAbilitySystemComponent->AddAttributeSetSubobject(StaminaSet.Get());
+		}
+		if (LevelSet)
+		{
+			ElistriaAbilitySystemComponent->AddAttributeSetSubobject(LevelSet.Get());
 		}
 	}
 	

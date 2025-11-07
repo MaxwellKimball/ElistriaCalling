@@ -11,7 +11,6 @@
 /**
  * 
  */
-
 UCLASS()
 class ELISTRIA_CALLING_API UStaminaAttributeSet : public UElistriaAttributeSetBase
 {

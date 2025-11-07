@@ -48,8 +48,12 @@ void ULevelAttributeSet::ConsumeXPGain()
 	const float Gain = GetXPGain();
 	if (Gain > 0.0f)
 	{
-		SetXP(GetXP() + Gain);
+		float OldXP = GetXP();
+		float NewXP =OldXP + Gain;
+		SetXP(NewXP);
 		SetXPGain(0.0f);
+		OnXPChanged.Broadcast(this, GetXP(), Gain);
+		OnLevelChanged.Broadcast(this, GetXP()-Gain, Level.GetCurrentValue());
 	}
 }
 
@@ -108,5 +112,6 @@ void ULevelAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 		SetLevel(static_cast<float>(Lvl));
 		SetXP(FMath::Clamp(GetXP(),0.0f,ComputeXPForLevel(Lvl)));
 		SetXPToNextLevel(ComputeXPForLevel(Lvl));
+		OnXPToNextLevelChanged.Broadcast(this, XPToNextLevel.GetCurrentValue(), XPToNextLevel.GetCurrentValue());
 	}
 }

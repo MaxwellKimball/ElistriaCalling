@@ -45,6 +45,7 @@ void UStaminaAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCal
 		if (OldStamina!=NewStamina)
 		{
 			SetStamina(NewStamina);
+			OnMaxStaminaChanged.Broadcast(this, OldStamina, NewStamina);
 		}
 		SetDrain(0.0f);
 	}
@@ -57,6 +58,7 @@ void UStaminaAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCal
 		if (OldStamina!=NewStamina)
 		{
 			SetStamina(NewStamina);
+			OnMaxStaminaChanged.Broadcast(this, OldStamina, NewStamina);
 		}
 	}
 }

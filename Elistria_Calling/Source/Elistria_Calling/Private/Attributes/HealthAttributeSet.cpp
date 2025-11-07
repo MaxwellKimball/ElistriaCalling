@@ -66,3 +66,23 @@ void UHealthAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCall
 	}
 }
 
+void UHealthAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue)
+{
+	Super::PostAttributeChange(Attribute, OldValue, NewValue);
+	if (Attribute == GetHealthAttribute())
+	{
+		const float ClampedHealth = FMath::Clamp(NewValue, 0.0f, GetMaxHealth());
+		if (ClampedHealth != NewValue)
+		{
+			SetHealth(ClampedHealth);
+		}
+	}
+	if (Attribute == GetMaxHealthAttribute())
+	{
+		const float ClampedMaxHealth = FMath::Max(1.0f, NewValue);
+		if (ClampedMaxHealth != NewValue)
+		{
+			SetMaxHealth(ClampedMaxHealth);
+		}
+	}
+}

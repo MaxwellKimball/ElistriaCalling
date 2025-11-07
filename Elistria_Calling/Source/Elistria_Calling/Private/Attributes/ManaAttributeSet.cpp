@@ -38,6 +38,7 @@ void UManaAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	if (Data.EvaluatedData.Attribute == GetManaAttribute())
 	{
 		SetMana(FMath::Clamp(GetMana(), 0.0f, GetMaxMana()));
+		;
 	}
 	if (Data.EvaluatedData.Attribute == GetCostAttribute())
 	{
@@ -48,7 +49,9 @@ void UManaAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		if (OldMana!=NewMana)
 		{
 			SetMana(NewMana);
+			OnManaChanged.Broadcast(this, OldMana, NewMana);
 		}
+		OnManaChanged.Broadcast(this, OldMana, NewMana);
 		SetCost(0.0f);
 	}
 	if (Data.EvaluatedData.Attribute==GetRestoreAttribute())
@@ -60,7 +63,9 @@ void UManaAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		if (OldMana!=NewMana)
 		{
 			SetMana(NewMana);
+			OnManaChanged.Broadcast(this, OldMana, NewMana);
 		}
+		OnManaChanged.Broadcast(this, OldMana, NewMana);
 		SetRestore(0.0f);
 	}
 }

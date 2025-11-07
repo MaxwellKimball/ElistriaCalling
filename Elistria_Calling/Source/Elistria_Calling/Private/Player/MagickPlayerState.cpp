@@ -33,6 +33,7 @@ void AMagickPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, ManaSet, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, HealthSet, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, StaminaSet, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, LevelSet, COND_None, REPNOTIFY_Always);
 }
 
 void AMagickPlayerState::SetupAbilityActorInfo()
@@ -70,5 +71,9 @@ void AMagickPlayerState::SetupAbilityActorInfo()
 			ElistriaAbilitySystemComponent->AddAttributeSetSubobject(LevelSet.Get());
 		}
 	}
-	
+}
+void AMagickPlayerState::OnRep_ElistriaAbilitySystemComponent()
+{
+	// Whenever the ability system component is replicated, we need to refresh the actor info
+	return;
 }

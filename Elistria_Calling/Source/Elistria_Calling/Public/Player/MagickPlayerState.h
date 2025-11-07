@@ -31,7 +31,7 @@ public:
 	void SetupAbilityActorInfo();
 	
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Abilities, Replicated)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Abilities, ReplicatedUsing = OnRep_ElistriaAbilitySystemComponent)
 	TObjectPtr<class UElistriaAbilitySystemComponent> ElistriaAbilitySystemComponent;
 
 	UPROPERTY(Replicated)
@@ -46,6 +46,8 @@ protected:
 	UPROPERTY(Replicated)
 	TObjectPtr<ULevelAttributeSet> LevelSet;
 
+	UFUNCTION()
+	void OnRep_ElistriaAbilitySystemComponent();
 private:
 	
 };

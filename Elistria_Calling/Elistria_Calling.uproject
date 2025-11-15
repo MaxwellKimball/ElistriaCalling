@@ -315,27 +315,11 @@
 			"Enabled": true
 		},
 		{
-			"Name": "AnimationLocomotionLibrary",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimationWarping",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimatorKit",
-			"Enabled": true
-		},
-		{
-			"Name": "CurveExpression",
-			"Enabled": true
-		},
-		{
-			"Name": "HairStrandsMutable",
-			"Enabled": true
-		},
-		{
 			"Name": "LiveLinkControlRig",
+			"Enabled": true
+		},
+		{
+			"Name": "LiveLinkHub",
 			"Enabled": true
 		},
 		{
@@ -347,67 +331,23 @@
 			"Enabled": true
 		},
 		{
-			"Name": "PerformanceCaptureCore",
-			"Enabled": true
-		},
-		{
-			"Name": "PerformanceCaptureWorkflow",
-			"Enabled": true
-		},
-		{
 			"Name": "PoseSearch",
 			"Enabled": true
 		},
 		{
-			"Name": "RigMapper",
+			"Name": "AnimationLocomotionLibrary",
 			"Enabled": true
 		},
 		{
-			"Name": "RigLogicMutable",
+			"Name": "CurveExpression",
 			"Enabled": true
 		},
 		{
-			"Name": "MovieSceneAnimMixer",
+			"Name": "AnimationWarping",
 			"Enabled": true
 		},
 		{
-			"Name": "SkeletalMeshMorphTargetEditingTools",
-			"Enabled": true
-		},
-		{
-			"Name": "TrajectoryTools",
-			"Enabled": true
-		},
-		{
-			"Name": "SkeletonTemplateFramework",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimNext",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimNextWarping",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimNextStateTree",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimNextPoseSearch",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimNextControlRig",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimNextChooser",
-			"Enabled": true
-		},
-		{
-			"Name": "AnimNextAnimGraph",
+			"Name": "AnimatorKit",
 			"Enabled": true
 		},
 		{
@@ -415,31 +355,23 @@
 			"Enabled": true
 		},
 		{
-			"Name": "DNACalib",
+			"Name": "PerformanceCaptureWorkflow",
 			"Enabled": true
 		},
 		{
-			"Name": "EvaluationNotifies",
+			"Name": "PerformanceCaptureCore",
 			"Enabled": true
 		},
 		{
-			"Name": "HierarchyTableAnimation",
+			"Name": "GPULightmass",
 			"Enabled": true
 		},
 		{
-			"Name": "HierarchyTable",
+			"Name": "CommonConversation",
 			"Enabled": true
 		},
 		{
-			"Name": "LiveLinkHub",
-			"Enabled": true
-		},
-		{
-			"Name": "LiveLinkCurveDebugUI",
-			"Enabled": true
-		},
-		{
-			"Name": "MutablePopulation",
+			"Name": "GameplayGraph",
 			"Enabled": true
 		},
 		{
@@ -447,7 +379,35 @@
 			"Enabled": true
 		},
 		{
-			"Name": "MetaHumanLiveLink",
+			"Name": "MutableClothing",
+			"Enabled": true
+		},
+		{
+			"Name": "ChaosOutfitAsset",
+			"Enabled": true
+		},
+		{
+			"Name": "CelestialVault",
+			"Enabled": true
+		},
+		{
+			"Name": "MutablePopulation",
+			"Enabled": true
+		},
+		{
+			"Name": "HairStrandsMutable",
+			"Enabled": true
+		},
+		{
+			"Name": "HairModelingToolset",
+			"Enabled": true
+		},
+		{
+			"Name": "HairCardGenerator",
+			"Enabled": true
+		},
+		{
+			"Name": "AlembicHairImporter",
 			"Enabled": true
 		},
 		{
@@ -455,12 +415,8 @@
 			"Enabled": true
 		},
 		{
-			"Name": "MetaHumanCoreTech",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64",
-				"Linux"
-			]
+			"Name": "MetaHumanLiveLink",
+			"Enabled": true
 		},
 		{
 			"Name": "MetaHumanCalibrationProcessing",
@@ -477,34 +433,6 @@
 				"Win64",
 				"Linux"
 			]
-		},
-		{
-			"Name": "MutableClothing",
-			"Enabled": true
-		},
-		{
-			"Name": "CelestialVault",
-			"Enabled": true
-		},
-		{
-			"Name": "DaySequence",
-			"Enabled": true
-		},
-		{
-			"Name": "ChaosOutfitAsset",
-			"Enabled": true
-		},
-		{
-			"Name": "DirectoryPlaceholder",
-			"Enabled": true
-		},
-		{
-			"Name": "LiveLinkCamera",
-			"Enabled": true
-		},
-		{
-			"Name": "LiveLinkInputDevice",
-			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [

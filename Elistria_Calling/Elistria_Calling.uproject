@@ -411,28 +411,126 @@
 			"Enabled": true
 		},
 		{
-			"Name": "MetaHumanCharacter",
+			"Name": "DetailPoseModel",
 			"Enabled": true
 		},
 		{
-			"Name": "MetaHumanLiveLink",
+			"Name": "MLDeformerFramework",
 			"Enabled": true
 		},
 		{
-			"Name": "MetaHumanCalibrationProcessing",
+			"Name": "NeuralMorphModel",
+			"Enabled": true
+		},
+		{
+			"Name": "VertexDeltaModel",
 			"Enabled": true,
 			"SupportedTargetPlatforms": [
 				"Win64",
+				"Linux",
+				"Mac"
+			]
+		},
+		{
+			"Name": "MovieScenePoseSearchTracks",
+			"Enabled": true
+		},
+		{
+			"Name": "PackedAttributes",
+			"Enabled": true
+		},
+		{
+			"Name": "RigMapper",
+			"Enabled": true
+		},
+		{
+			"Name": "MovieSceneAnimMixer",
+			"Enabled": true
+		},
+		{
+			"Name": "TrajectoryTools",
+			"Enabled": true
+		},
+		{
+			"Name": "SkeletalMeshMorphTargetEditingTools",
+			"Enabled": true
+		},
+		{
+			"Name": "AnimNextAnimGraph",
+			"Enabled": true
+		},
+		{
+			"Name": "AnimNextChooser",
+			"Enabled": true
+		},
+		{
+			"Name": "AnimNextControlRig",
+			"Enabled": true
+		},
+		{
+			"Name": "AnimNextPoseSearch",
+			"Enabled": true
+		},
+		{
+			"Name": "AnimNextStateTree",
+			"Enabled": true
+		},
+		{
+			"Name": "AnimNextWarping",
+			"Enabled": true
+		},
+		{
+			"Name": "AnimNext",
+			"Enabled": true
+		},
+		{
+			"Name": "AssetSearch",
+			"Enabled": true
+		},
+		{
+			"Name": "PCGInstancedActorsInterop",
+			"Enabled": true
+		},
+		{
+			"Name": "PCGNiagaraInterop",
+			"Enabled": true
+		},
+		{
+			"Name": "InstancedActors",
+			"Enabled": true
+		},
+		{
+			"Name": "FieldSystemPlugin",
+			"Enabled": true
+		},
+		{
+			"Name": "USDMultiUser",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Mac",
 				"Linux"
 			]
 		},
 		{
-			"Name": "MetaHuman",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64",
-				"Linux"
-			]
+			"Name": "MacGraphicsSwitching",
+			"Enabled": false
+		},
+		{
+			"Name": "DataCharts",
+			"Enabled": true
+		},
+		{
+			"Name": "SlateScripting",
+			"Enabled": true
+		},
+		{
+			"Name": "AppleImageUtils",
+			"Enabled": false
+		},
+		{
+			"Name": "MetaHumanSDK",
+			"Enabled": false
 		}
 	],
 	"TargetPlatforms": [

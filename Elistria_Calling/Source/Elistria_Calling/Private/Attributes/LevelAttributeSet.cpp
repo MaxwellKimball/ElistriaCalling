@@ -23,7 +23,6 @@ float ULevelAttributeSet::ComputeXPForLevel(int32 InLevel) const
 	return 100.f + 50.f * FMath::Max(0, InLevel - 1);
 }
 
-
 void ULevelAttributeSet::OnRep_Level(const FGameplayAttributeData& OldValue)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(ULevelAttributeSet, Level, OldValue);
@@ -89,7 +88,6 @@ void ULevelAttributeSet::HandleLevelUp(int32 LevelsGained)
 	// This function can be expanded to include additional logic when a level-up occurs.
 	// For example, you might want to notify other systems, play a sound, etc.
 	
-
 	OnLevelChanged.Broadcast(this, GetLevel() - LevelsGained, GetLevel());
 }
 

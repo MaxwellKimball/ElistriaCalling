@@ -88,6 +88,7 @@ void ULevelAttributeSet::HandleLevelUp(int32 LevelsGained)
 {
 	// This function can be expanded to include additional logic when a level-up occurs.
 	// For example, you might want to notify other systems, play a sound, etc.
+	
 
 	OnLevelChanged.Broadcast(this, GetLevel() - LevelsGained, GetLevel());
 }

@@ -8,6 +8,7 @@
 #include "Net/UnrealNetwork.h"
 #include "GameplayEffectExtension.h"
 #include "ManaAttributeSet.h"
+#include "Attributes/ElistriaAttributesSet.h"
 #include "LevelAttributeSet.generated.h"
 
 /**

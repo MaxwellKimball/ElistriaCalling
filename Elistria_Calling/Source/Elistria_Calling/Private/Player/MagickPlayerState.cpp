@@ -11,6 +11,7 @@ AMagickPlayerState::AMagickPlayerState()
 	HealthSet = CreateDefaultSubobject<UHealthAttributeSet>(TEXT("HealthSet"));
 	StaminaSet = CreateDefaultSubobject<UStaminaAttributeSet>(TEXT("StaminaSet"));
 	LevelSet = CreateDefaultSubobject<ULevelAttributeSet>(TEXT("XPSet"));
+	ElistriaAttributesSet = CreateDefaultSubobject<UElistriaAttributesSet>(TEXT("ElistriaAttributesSet"));
 	
 }
 
@@ -35,6 +36,7 @@ void AMagickPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, HealthSet, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, StaminaSet, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, LevelSet, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(AMagickPlayerState, ElistriaAttributesSet, COND_None, REPNOTIFY_Always);
 }
 
 void AMagickPlayerState::SetupAbilityActorInfo()
@@ -70,6 +72,11 @@ void AMagickPlayerState::SetupAbilityActorInfo()
 		if (LevelSet)
 		{
 			ElistriaAbilitySystemComponent->AddAttributeSetSubobject(LevelSet.Get());
+		}
+		
+		if (ElistriaAttributesSet)
+		{
+			ElistriaAbilitySystemComponent->AddAttributeSetSubobject(ElistriaAttributesSet.Get());
 		}
 	}
 }

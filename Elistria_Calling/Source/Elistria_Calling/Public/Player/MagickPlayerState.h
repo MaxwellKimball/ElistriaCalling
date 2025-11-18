@@ -45,6 +45,9 @@ protected:
 
 	UPROPERTY(Replicated)
 	TObjectPtr<ULevelAttributeSet> LevelSet;
+	
+	UPROPERTY(Replicated)
+	TObjectPtr<UElistriaAttributesSet> ElistriaAttributesSet;
 
 	UFUNCTION()
 	void OnRep_ElistriaAbilitySystemComponent();

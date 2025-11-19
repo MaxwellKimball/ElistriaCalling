@@ -1,4 +1,4 @@
-// c++
+// Source/Elistria_Calling/Public/Attributes/LevelAttributeSet.h
 #pragma once
 
 #include "CoreMinimal.h"
@@ -18,6 +18,9 @@ public:
 
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Broadcast attribute changes centrally
+	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_Level)
 	FGameplayAttributeData Level;

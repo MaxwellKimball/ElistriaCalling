@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerState.h"
 #include "AbilitySystemInterface.h"
 #include "ElistriaAbilitySystemComponent.h"
+#include "Attributes/ElistriaAttributesSet.h"
 #include "Attributes/ManaAttributeSet.h"
 #include "Attributes/StaminaAttributeSet.h"
 #include "Attributes/HealthAttributeSet.h"

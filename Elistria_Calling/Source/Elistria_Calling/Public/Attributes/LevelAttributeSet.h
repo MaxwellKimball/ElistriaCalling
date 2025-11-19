@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// c++
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,13 +6,8 @@
 #include "ElistriaAbilitySystemComponent.h"
 #include "Net/UnrealNetwork.h"
 #include "GameplayEffectExtension.h"
-#include "ManaAttributeSet.h"
-#include "Attributes/ElistriaAttributesSet.h"
 #include "LevelAttributeSet.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class ELISTRIA_CALLING_API ULevelAttributeSet : public UElistriaAttributeSetBase
 {
@@ -23,33 +17,24 @@ public:
 	ULevelAttributeSet();
 
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
-
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing=OnRep_Level)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_Level)
 	FGameplayAttributeData Level;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing=OnRep_XP)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_XP)
 	FGameplayAttributeData XP;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_XPToNextLevel)
 	FGameplayAttributeData XPToNextLevel;
 
 	UPROPERTY(VisibleAnywhere)
-	FGameplayAttributeData XPGain;
-
-	UPROPERTY(VisibleAnywhere)
-	FGameplayAttributeData XPLoss;
-
-	UPROPERTY(VisibleAnywhere)
 	FGameplayAttributeData MaxLevel;
 
-	ATTRIBUTE_ACCESSORS(ULevelAttributeSet, XP)
 	ATTRIBUTE_ACCESSORS(ULevelAttributeSet, Level)
-	ATTRIBUTE_ACCESSORS(ULevelAttributeSet, MaxLevel)
+	ATTRIBUTE_ACCESSORS(ULevelAttributeSet, XP)
 	ATTRIBUTE_ACCESSORS(ULevelAttributeSet, XPToNextLevel)
-	ATTRIBUTE_ACCESSORS(ULevelAttributeSet, XPGain)
-	ATTRIBUTE_ACCESSORS(ULevelAttributeSet, XPLoss)
+	ATTRIBUTE_ACCESSORS(ULevelAttributeSet, MaxLevel)
 
 	UFUNCTION()
 	void OnRep_Level(const FGameplayAttributeData& OldValue);
@@ -68,10 +53,8 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FAttributeChangedEvent OnXPToNextLevelChanged;
-	
+
 protected:
 	float ComputeXPForLevel(int32 InLevel) const;
 	void HandleLevelUp(int32 LevelsGained);
-	void ConsumeXPGain();
-	void TryProcessLevelUp();
 };

@@ -8,6 +8,7 @@
 
 UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Input_Confirm, "Input.Confirm");
 UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Input_Cancel, "Input.Cancel");
+
 void UElistriaAbilitySystemComponent::GrantAbilitiesFromDataAsset(const UPlayerGameplayAbilitiesDataAsset* AbilitiesDataAsset)
 {
 	 if (!AbilitiesDataAsset) return;
